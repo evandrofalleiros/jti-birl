@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`jti-birl`
+Elemento customizado para a criação de textos aleatórios no estilo BodyBuilder Ipsum 
+
+@demo demo/index.html 
+-->
+
+<dom-module id="jti-birl">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Olá, [[nome]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'jti-birl',
+
+      properties: {
+        nome: {
+          type: String
+        }
+      },
+
+    });
+  </script>
+</dom-module>
