@@ -4,7 +4,8 @@
   "main": "jti-birl.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
-    "paper-input": "PolymerElements/paper-input#^1.1.17"
+    "paper-input": "PolymerElements/paper-input#^1.1.17",
+    "polymerfire": "firebase/polymerfire#^0.9.4"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
