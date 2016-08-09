@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymerfire/polymerfire.html">
+
 
 <!--
 `jti-birl`
@@ -14,9 +16,24 @@ Elemento customizado para a criação de textos aleatórios no estilo BodyBuilde
         display: block;
       }
     </style>
+
+    <firebase-app
+      name="jti-birl"
+      api-key="AIzaSyDu6fdMq4-Sw3gbuFAWfL2PWjgP1ge6AKI"
+      auth-domain="jti-facebirlk.firebaseapp.com"
+      database-url="https://jti-facebirlk.firebaseio.com"
+      storageBucket="jti-facebirlk.appspot.com">
+    </firebase-app>
+
+    <firebase-query
+        id="lorem"
+        app-name="jti-birl"
+        path="/lorem"
+        data="{{loremOriginal}}">
+    </firebase-query>
     
-    <template is="dom-repeat" items="[[lorem]]">
-      <p>[[item.texto]]</p>
+    <template is="dom-repeat" items="{{lorem}}">
+      <p>{{item.texto}}</p>
     </template>
 
   </template>
@@ -77,53 +94,6 @@ Elemento customizado para a criação de textos aleatórios no estilo BodyBuilde
         }
 
         this.set('lorem', lorem);
-      },
-
-      ready: function(){
-        var paragrafos = +this.paragrafos;
-        var loremOriginal = [
-          { texto: 'Aqui é Body Builder Ipsum PORRA! Sai filho da puta! Bora caralho, você quer ver essa porra velho. Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Ajuda o maluco que tá doente. Negativa Bambam negativa. É 37 anos caralho!'},
-
-          { texto: 'Não vai dá não. Sai filho da puta! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. É 13 porra! Aqui é bodybuilder porra! Negativa Bambam negativa.'},
-
-          { texto: 'Aqui nóis constrói fibra, não é água com músculo. É 37 anos caralho! Aqui é bodybuilder porra! AHHHHHHHHHHHHHHHHHHHHHH..., porra! Vai subir árvore é o caralho porra! Tá comigo porra.'},
-
-          { texto: 'Ajuda o maluco que tá doente. Bora caralho, você quer ver essa porra velho. Sai filho da puta! É nóis caraio é trapezera buscando caraio! AHHHHHHHHHHHHHHHHHHHHHH..., porra! Que não vai dá rapaiz, não vai dá essa porra.'},
-
-          { texto: 'Que não vai dá rapaiz, não vai dá essa porra. Ó o homem ali porra!, é 13 porra! Birl! É 37 anos caralho! Sai de casa comi pra caralho porra. AHHHHHHHHHHHHHHHHHHHHHH..., porra!'},
-
-          { texto: 'Ó o homem ali porra!, é 13 porra! Sai de casa comi pra caralho porra. Ele tá olhando pra gente. É esse que a gente quer, é ele que nóis vamo buscar. Birl! Vo derrubar tudo essas árvore do parque ibirapuera.'},
-
-          { texto: 'Vo derrubar tudo essas árvore do parque ibirapuera. É esse que a gente quer, é ele que nóis vamo buscar. É 37 anos caralho! Tá comigo porra. Vai subir árvore é o caralho porra! É verão o ano todo vem cumpadi.'},
-
-          { texto: 'Ele tá olhando pra gente. Sai filho da puta! É esse que a gente quer, é ele que nóis vamo buscar. Birl! Negativa Bambam negativa. É verão o ano todo vem cumpadi.'},
-
-          { texto: 'Eu quero esse 13 daqui a pouquinho aí. É nóis caraio é trapezera buscando caraio! Eita porra!, tá saindo da jaula o monstro! Birl! É verão o ano todo vem cumpadi. Ele tá olhando pra gente.'},
-
-          { texto: 'Sai de casa comi pra caralho porra. Ó o homem ali porra!, é 13 porra! Bora caralho, você quer ver essa porra velho. É nóis caraio é trapezera buscando caraio! Birl! Boraaa, Hora do Show Porra.'},
-
-          { texto: 'Vamo monstro! É esse que a gente quer, é ele que nóis vamo buscar. Bora caralho, você quer ver essa porra velho. Sai filho da puta! Eu quero esse 13 daqui a pouquinho aí. Ó o homem ali porra!, é 13 porra!'},
-
-          { texto: 'É nóis caraio é trapezera buscando caraio! Ajuda o maluco que tá doente. Eita porra!, tá saindo da jaula o monstro! É 13 porra! Não vai dá não. AHHHHHHHHHHHHHHHHHHHHHH..., porra!'}, 
-
-          { texto: 'Sai de casa comi pra caralho porra. É 37 anos caralho! Não vai dá não. Ele tá olhando pra gente. É nóis caraio é trapezera buscando caraio! Aqui nóis constrói fibra, não é água com músculo.'},
-
-          { texto: 'Negativa Bambam negativa. Birl! Ele tá olhando pra gente. Sai filho da puta! É 13 porra! Sabe o que é isso daí? Trapézio descendente é o nome disso aí.'},
-
-          { texto: 'Boraaa, Hora do Show Porra. Não vai dá não. Tá comigo porra. Eita porra!, tá saindo da jaula o monstro! É 13 porra! Vem porra!'},
-
-          { texto: 'Que não vai dá rapaiz, não vai dá essa porra. Birl! Sabe o que é isso daí? Trapézio descendente é o nome disso aí. Sai filho da puta! Sai de casa comi pra caralho porra. É 37 anos caralho!'},
-
-          { texto: 'É 37 anos caralho! Ó o homem ali porra!, é 13 porra! É nóis caraio é trapezera buscando caraio! Que não vai dá rapaiz, não vai dá essa porra. Tá comigo porra. É 13 porra!'},
-
-          { texto: 'Negativa Bambam negativa. Vai subir árvore é o caralho porra! Birl! É 37 anos caralho! Tá comigo porra. Vo derrubar tudo essas árvore do parque ibirapuera.'},
-
-          { texto: 'Vai subir árvore é o caralho porra! Ó o homem ali porra!, é 13 porra! É nóis caraio é trapezera buscando caraio! É verão o ano todo vem cumpadi. Que não vai dá rapaiz, não vai dá essa porra. Boraaa, Hora do Show Porra.'},
-
-          { texto: 'É nóis caraio é trapezera buscando caraio! Vamo monstro! Birl! Ajuda o maluco que tá doente. É esse que a gente quer, é ele que nóis vamo buscar. É 37 anos caralho!'}
-        ];
-        
-        this.set('loremOriginal', loremOriginal);
       }
 
     });
