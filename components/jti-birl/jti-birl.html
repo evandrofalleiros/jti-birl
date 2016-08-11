@@ -1,0 +1,101 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymerfire/polymerfire.html">
+
+
+<!--
+`jti-birl`
+Elemento customizado para a criação de textos aleatórios no estilo BodyBuilder Ipsum 
+
+@demo demo/index.html 
+-->
+
+<dom-module id="jti-birl">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <firebase-app
+      name="jti-birl"
+      api-key="AIzaSyDu6fdMq4-Sw3gbuFAWfL2PWjgP1ge6AKI"
+      auth-domain="jti-facebirlk.firebaseapp.com"
+      database-url="https://jti-facebirlk.firebaseio.com"
+      storageBucket="jti-facebirlk.appspot.com">
+    </firebase-app>
+
+    <firebase-query
+        id="lorem"
+        app-name="jti-birl"
+        path="/lorem"
+        data="{{loremOriginal}}">
+    </firebase-query>
+    
+    <template is="dom-repeat" items="{{lorem}}">
+      <p>{{item.texto}}</p>
+    </template>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'jti-birl',
+
+      properties: {
+        paragrafos: {
+          type: Number,
+          value: 1,
+          observer: '_paragrafosChanged'
+        },
+
+        lorem: {
+          type: Array
+        },
+
+        loremOriginal: {
+          type: Array
+        }
+      },
+
+      _paragrafosChanged: function(paragrafos){
+        if (this.loremOriginal){
+          var lorem = [];
+
+          this._randomizar();          
+        }        
+      },
+
+      /* Função utilizada para randomizar parágrafos */
+      _randomizar: function(){
+        var paragrafos = +this.paragrafos;
+        var nRandomicos = [];
+        var lorem = [];
+
+        // Inicialização
+        for (var i = 0; i < this.loremOriginal.length; i += 1){
+          nRandomicos.push(i);
+        }
+    
+        // Shuffle
+        for (i = nRandomicos.length - 1; i > 1  ; i -= 1){
+            var r = Math.floor(Math.random()*i);
+            var t = nRandomicos[i];
+            nRandomicos[i] = nRandomicos[r];
+            nRandomicos[r] = t;
+        }
+
+        // Randomização
+        for (var i = 0; i < paragrafos; i += 1){
+          var posicao = nRandomicos.shift();
+
+          lorem.push(this.loremOriginal[posicao]);
+        }
+
+        this.set('lorem', lorem);
+      }
+
+    });
+  </script>
+</dom-module>
