@@ -16,22 +16,7 @@ Elemento customizado para a criação de textos aleatórios no estilo BodyBuilde
         display: block;
       }
     </style>
-
-    <firebase-app
-      name="jti-birl"
-      api-key="AIzaSyDu6fdMq4-Sw3gbuFAWfL2PWjgP1ge6AKI"
-      auth-domain="jti-facebirlk.firebaseapp.com"
-      database-url="https://jti-facebirlk.firebaseio.com"
-      storageBucket="jti-facebirlk.appspot.com">
-    </firebase-app>
-
-    <firebase-query
-        id="lorem"
-        app-name="jti-birl"
-        path="/lorem"
-        data="{{loremOriginal}}">
-    </firebase-query>
-    
+   
     <template is="dom-repeat" items="{{lorem}}">
       <p>{{item.texto}}</p>
     </template>
@@ -46,17 +31,24 @@ Elemento customizado para a criação de textos aleatórios no estilo BodyBuilde
       properties: {
         paragrafos: {
           type: Number,
-          value: 1,
-          observer: '_paragrafosChanged'
+          observer: '_paragrafosChanged',
+          notify: true
         },
 
         lorem: {
-          type: Array
+          type: Array,
+          notify: true
         },
 
         loremOriginal: {
-          type: Array
+          type: Object,
+          notify: true,
+          observer: '_loremOriginalChanged'
         }
+      },
+
+      _loremOriginalChanged: function(loremOriginal){
+        this._randomizar();
       },
 
       _paragrafosChanged: function(paragrafos){
@@ -72,9 +64,16 @@ Elemento customizado para a criação de textos aleatórios no estilo BodyBuilde
         var paragrafos = +this.paragrafos;
         var nRandomicos = [];
         var lorem = [];
+        var count = 0;
+
+        for (var key in this.loremOriginal){
+          nRandomicos.push(count); 
+          count += 1;
+        }
 
         // Inicialização
         for (var i = 0; i < this.loremOriginal.length; i += 1){
+          console.log(i);
           nRandomicos.push(i);
         }
     
@@ -89,11 +88,26 @@ Elemento customizado para a criação de textos aleatórios no estilo BodyBuilde
         // Randomização
         for (var i = 0; i < paragrafos; i += 1){
           var posicao = nRandomicos.shift();
-
           lorem.push(this.loremOriginal[posicao]);
         }
 
         this.set('lorem', lorem);
+      },
+
+      ready: function(){
+        var self = this;
+        var config = {
+          apiKey: "AIzaSyDu6fdMq4-Sw3gbuFAWfL2PWjgP1ge6AKI",
+          authDomain: "jti-facebirlk.firebaseapp.com",
+          databaseURL: "https://jti-facebirlk.firebaseio.com",
+          storageBucket: "jti-facebirlk.appspot.com",
+        };
+          
+        firebase.initializeApp(config);
+
+        firebase.database().ref('/lorem').on('value', function(snapshot){
+          self.set('loremOriginal', snapshot.val());
+        });
       }
 
     });
